@@ -1,0 +1,81 @@
+Especificacao de uma TV
+
+Considere uma televisão, para sua fabricação, ela deve conter uma marca, um modelo, um tamanho e uma resolucao. Após criada nossa televisão, as características citadas não podem ser alteradas.
+
+Esta televisão tem as seguintes funcionalidades:
+1 - Volume: aumentar, diminuir, colocar em mudo e mostrar volume atual;
+2 - Canais: aumentar, diminuir, ir para um canal pressionando um número, voltar para o canal anterior quando pressionado o botão de voltar e mostrar canal atual;
+
+Quando esta TV for ligada deverá ter os seguintes estados:
+1 - canal padrão é o 11;
+2 - menor canal é o 2;
+3 - maior canal é o 69;
+4 - volume mínimo é 0;
+5 - volume máximo é 100;
+6 - volume padrão é 10;
+7 - canal anterior é o canal padrão;
+
+Para melhor experiência dos clientes, deve-se tomar alguns cuidados com as funcionalidades, como:
+1 - volume não deve passar os limites máximo e mínimo;
+2 - canais não devem passar os limites máximo e mínimo;
+3 - se o canal canal solicitado pelo cliente, ultrapassar os limites, mostrar uma mensagem de canal inválido;
+
+Casos de teste:
+TV tv = new TV("LG", "TV32", 32, 720);
+
+System.out.println(tv.fabricante == "LG");
+System.out.println(tv.modelo == "TV32");
+System.out.println(tv.tamanho == 32);
+System.out.println(tv.resolucao == 720);
+
+// testando volume
+//System.out.println(tv.getVolume()); // 10
+for (int i = 0; i < 50; i++) tv.sobeVolume();
+System.out.println(tv.getVolume() == 60); // true
+tv.desceVolume();
+tv.desceVolume();
+tv.desceVolume();
+System.out.println(tv.getVolume() == 57); // true
+tv.sobeVolume();
+System.out.println(tv.getVolume() == 58); // true
+
+// testando canais
+//System.out.println(tv.getCanal()); // 11
+for (int i = 0; i < 50; i++) tv.sobeCanal(); // sobe 50 canais
+System.out.println(tv.getCanal() == 61); // true
+for (int i = 0; i < 50; i++) tv.desceCanal(); // desce 50 canais
+System.out.println(tv.getCanal() == 11); // true
+tv.sobeCanal();
+tv.sobeCanal();
+System.out.println(tv.getCanal() == 13); // true
+tv.desceCanal();
+System.out.println(tv.getCanal() == 12); // true
+
+// passando dos limites
+for (int i = 0; i < 80; i++) tv.sobeCanal(); // sobe 80 canais
+System.out.println(tv.getCanal() == 69);
+for (int i = 0; i < 80; i++) tv.desceCanal(); // desce 80 canais
+System.out.println(tv.getCanal() == 2);
+
+for (int i = 0; i < 150; i++) tv.sobeVolume(); // sobe 150 vezes
+System.out.println(tv.getVolume() == 100);
+for (int i = 0; i < 150; i++) tv.desceVolume(); // desce 150 vezes
+System.out.println(tv.getVolume() == 0); // true
+
+// desafios
+tv.irCanal(42);
+System.out.println(tv.getCanal() == 42);
+tv.voltarCanal();
+System.out.println(tv.getCanal() == 2);
+tv.irCanal(13);
+tv.irCanal(17);
+tv.voltarCanal();
+System.out.println(tv.getCanal() == 13);
+tv.mudo();
+System.out.println(tv.getVolume() == 0);
+tv.sobeVolume();
+tv.mudo();
+System.out.println(tv.getVolume() == 0);
+
+// se quiser ver uma excessao descomente esta linha
+//tv.irCanal(90);
